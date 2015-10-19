@@ -18,9 +18,6 @@ var SliderModel = Backbone.Model.extend({
 		this.set("active", 0);
 	}
 });
-//var SliderCollection = Backbone.Collection.extend({
-//	model: SliderModel
-//});
 var m = new SliderModel();
 var SliderView = Backbone.View.extend({
 	el: ".main_container",
@@ -30,8 +27,9 @@ var SliderView = Backbone.View.extend({
 	},
 	clickPrev: function() {
 		var currentPos = ~~this.model.get("active");
+		console.log("cp", currentPos);
+		if(currentPos < 0) currentPos = this.model.get("imgs").length - 1;
 		currentPos -= 1;
-		if(currentPos < 0) currentPos = this.model.get("imgs").length;
 		this.model.set("active", currentPos);
 	},
 	clickNext: function() {
@@ -46,8 +44,9 @@ var SliderView = Backbone.View.extend({
 	},
 	render: function() {
 		var index = this.model.get("active");
+		console.log("render", index);
 		var currImg = this.model.get("imgs");
-		var place = this.$el.find(".slde_place");
+		var place = this.$el.find(".slide_place");
 		place.html(currImg[index]);
 		return this;
 	}
